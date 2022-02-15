@@ -1,0 +1,134 @@
+Teremos que usar Cisco Packet Tracer. Este trabalhado estará mais focado no fudndamento de infraestrutura de layer 2 e layer 3.
+
+ 				 	+ Organização:
+
+Cada aluno irá ficar com um edifício para trabalhar com, e manter o edfício com que trabalhou no sprint 1:
+ -Danilton: Edificio 1
+ -Luis: Edificio 2
+ -Marisa: Edificio 3
+
+Todos as simulações irão englobar apenas um edificio, mas devem incluir o Campus Backbone, ou seja deve ter uma switc representando o MC(main corss-connect) e switchs representando outras conexões intermediárias do edficio.
+
+O aluno responsável pelo edificio 1 tem um trabalho a mais a fazer: "juntar", ou colocar todas as simulações, criadas pelos membros do grupo, em um só ficheiro de Packet Tracer.
+
+				      + Versão Packet Tracer:
+
+Para evitar muitos problemas quando fora juntar as simulações num ficheiro de Packet Tracer, todo os membros do grupo devem utilizar a mesma versão de Packet Tracer, que é a mesma que fora desponibilizada nas aula PL.
+
+			              + Nomeação dos devices: 
+
+Sempre que adicionado novo device deve-se mudar o nome dado automaticamente para um nome mais significatico. Durante as reuniões de grupo deve-se descutir sobre isso e estabelecer regras para facilitar o trabalho em grupo, e isso deve ser incluido no documento planing.md.
+
+O nome de apresentação é apenas para o Packet Tracer apresentar, ao nível OS, cada dispositivo tem um hostname(DNS name), que pode ser definida usando o comando *hostname*, não são permitidos espaços no DNS.
+
+2. Layer Two Configuartion:
+ 
+O objetivo é criar um layout de network lógico e não físico. O layout deve ser representativo do sprint anterior. Nomeadamente:
+
+	- Todos cross-connect(distributor), incluindo os CP(Consolidation Points), no projeto de cablagem estruturada é para ser representada na simulação por um layer two network swtch. Deve-se usar os models de switch PT-empty, e adicionar à elas as portas do tipo  requeridas.
+	- Os tipo de cabos de cabos utilizados para interconectar os diferentes cross-conncet(switchs na simulação), devem ser os mesmos cabos(cobre or fibra) que foram utilizadas no projeto de cablagem estruturada. A mesma coisa para subsistemas de cablagem horizontal.
+	-  Na simulação também deve estar presente a redundancia de ligações de cabos entre cross-connect que está presente no projeto de cablagem estruturada. No entanto, várias ligações entre 2 cross-connect podem ser representados como uma única conexão entre 2 switchs na simulação.
+
+				        + Virtual LANs(VLan):
+
+Para cada edificio deve-se definir unicamente 5 VLANs:
+	- Um VLAN para todos os end-users outlets no piso 0.
+	- Um VLAN para todos os end-users outlets no piso 1.
+	- Um VLAN para redes Wi-Fi(todos os Acess-Points outltes no edifício).
+	#- Um VLAN para o edificio DMZ(para servers, estação de trabalho da administração, e as máquinas industriais dos edifícios 3, 4 e 5).#
+	- Um VLAN para VoIP(para IP-phones).
+
+Estes VLAN devem estar disponível em todos os switch de todos os edificios e todos os switchs devem ser configurados para trunk-mode com todos os VLANs.
+Deve também ser estabelicido um VLAN para o campus backbone, diferente dos outros este é igual a para todos os edifícios. E deve estar disponível em todos os switchs de todos os edifícios, e estar presente na database de todos os switchs.
+Terá um total de:
+(5x3)+1= 16 VLANs.
+No entanto, estar disponível significa que o administrador pode a qualquer momento conectar um dispositivo em qualquer lugar da infraestrutura a qualquer VLAN, basta apenas atribuir a porta de switch correspondente à VLAN desejada.
+
+					+ Spannig tree protocol:
+
+Não há nada a fazer aqui, simplesmente *não desabilitar STP em qualquer switch*
+
+				     + VLAN Truncking protocol(VTP):
+
+
+Esta é uma maneira de garantir que todos os switch tenham o mesmo complete VLAN database, e para alcançar isso:
+ 	- Todos os switchs devem usar o mesmo VTP domain name (*vtp domain...*)
+	- Todos os switchs, excepto um, deve estar em VTP client mode(*vtp mode client*)
+	- Um switch deve estar no server mode(*vtp mode server*). Este será o switch onde a 	VTP database será manualmente definida e alterada sempre que necessária.
+
+As portas de inconecção dos switchs devem estar em trunk-mode (switchport  mode  trunk), e o VTP domain name é o mesmo, VTP irá garantir a propagação de VLAN database (copiando) da switch no server mode para os switches no client mode.
+
+					     + VTP servers:
+
+Um switch assumirá o VTP server mode, enquanto que os restantes dos switchs assumirão o VTP client mode. O switch que assumirá o VTP server mode, o switch que representa o maior nivel de cross-connect, no edifício 1 será o MC e os restantes edificios serão os IC.
+
+              				     + VLAN database:
+
+Todas as simulações do Packet Tracer devem usar o mesmo VLAN database. Resultando do planeamento da reunião, que ali deve ser listada os VLANs a ser utilizado por todos os membros do grupo, e que também deve ser incluso no documento planning.md .
+Cada VLAN deve ter um nome significativo unico e id(VLANID) também deve ser únicos. No Cisco Packet Tracer, o id deve estar entre 2 a 1000. O que deve ser utilizado está no enunciado nas ultimas páginas. 
+
+					     + VLAN domain:
+
+VTP só propaga o VLAN database entre os switchas que pertencem ao mesmo VTP domain, portanto, todas as simulações sera colocados juntos facilmente, todos os membros devem colocar o mesmo VTP domain name à todos os switchs. O VTP domain name deve ter de 1 a 32 caracter, e não deve conter espaços. O VTP domain name deve ser colocado também no documento planning.md .
+
+					+3. Layer three configuration:
+
+IPv4 networks vão ser definidos mais precisamente  1 IPv4 network para cada VLAN.
+
+
+
+
+
+
+
+
+
+
+
+Para ligar à internet - IPS
+
+
+-End user outlets on the ground floor: 40 nodes*
+-End user outlets on floor one: 40 nodes*
+-Wi-Fi network: 24 nodes
+-Local servers and administration workstations (DMZ): 70nodes*
+-VoIP (IP-phones): 20 nodes
+-Backbone: 120nodes*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

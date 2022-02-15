@@ -1,0 +1,111 @@
+ACL:
+
+1st
+F0 -- access-list 100 permit ip 10.124.186.0 0.0.0.63 any  
+F1 -- access-list 101 permit ip 10.124.185.128 0.0.0.127 any
+WIFI -- access-list 102 permit ip 10.124.185.0 0.0.0.127 any
+VOIP -- access-list 103 permit ip 10.124.186.64 0.0.0.63 any
+
+Backbone  
+access-list 105 deny ip 10.124.186.0 0.0.0.63 any 
+access-list 105 deny ip 10.124.185.128 0.0.0.127 any
+access-list 105 deny ip 10.124.185.0 0.0.0.127 any
+access-list 105 deny ip 10.124.186.64 0.0.0.63 any
+access-list 105 deny ip 10.124.186.128 0.0.0.15 any
+access-list 105 permit ip 0.0.0.0 255.255.255.255 255.255.255.255 0.0.0.0
+
+2nd
+
+access-list 100 permit icmp any any echo
+access-list 100 permit icmp any any echo-reply
+Access-list 101 permit icmp any any echo
+Access-list 101 permit icmp any any echo-
+Access-list 101 permit icmp any any echo-reply 
+Access-list 102 permit icmp any any echo
+Access-list 102 permit icmp any any echo-reply 
+Access-list 103 permit icmp any any echo
+Access-list 103 permit icmp any any echo-reply 
+Access-list 105 permit icmp any any echo
+Access-list 105 permit icmp any any echo-reply 
+
+3rd
+
+access-list 106 permit tcp any 10.124.186.132 0.0.0.0 eq 80 
+access-list 106 permit tcp any 10.124.186.132 0.0.0.0 eq 443 
+access-list 106 permit tcp any 10.124.186.130 0.0.0.0 eq 53 
+access-list 106 permit udp any 10.124.186.130 0.0.0.0 eq 53
+access-list 106 permit ip 10.124.186.128 0.0.0.15 any 
+
+4th
+
+access-list 106 permit ip 0.0.0.0 255.255.255.255 255.255.255.255 0.0.0.0
+access-list 105 permit ip 0.0.0.0 255.255.255.255 255.255.255.255 0.0.0.0
+access-list 103 permit ip 0.0.0.0 255.255.255.255 255.255.255.255 0.0.0.0
+access-list 102 permit ip 0.0.0.0 255.255.255.255 255.255.255.255 0.0.0.0
+access-list 101 permit ip 0.0.0.0 255.255.255.255 255.255.255.255 0.0.0.0
+access-list 100 permit ip 0.0.0.0 255.255.255.255 255.255.255.255 0.0.0.0
+
+access-list 105 permit udp any 10.124.179.2 0.0.0.0 eq 69
+access-list 100 permit udp any 10.124.186.1 0.0.0.0 eq 69 
+access-list 101 permit udp any 10.124.185.129 0.0.0.0 eq 69 
+access-list 102 permit udp any 10.124.185.1 0.0.0.0 eq 69 
+access-list 103 permit udp any 10.124.186.65 0.0.0.0 eq 69 
+access-list 106 permit udp any 10.124.186.129 0.0.0.0 eq 69
+
+access-list 105 permit tcp any 10.124.179.2 0.0.0.0 eq 2000 
+access-list 105 permit tcp any 10.124.179.2 0.0.0.0 eq 1720 
+access-list 100 permit tcp any 10.124.186.1 0.0.0.0 eq 2000  
+access-list 101 permit tcp any 10.124.185.129 0.0.0.0 eq 2000
+access-list 102 permit tcp any 10.124.185.1 0.0.0.0 eq 2000 
+access-list 103 permit tcp any 10.124.186.65 0.0.0.0 eq 2000 
+access-list 106 permit tcp any 10.124.186.129 0.0.0.0 eq 2000 
+
+access-list 100 permit ospf any 224.0.0.5 0.0.0.0
+access-list 101 permit ospf any 224.0.0.5 0.0.0.0
+access-list 102 permit ospf any 224.0.0.5 0.0.0.0
+access-list 103 permit ospf any 224.0.0.5 0.0.0.0
+access-list 105 permit ospf any 224.0.0.5 0.0.0.0
+access-list 106 permit ospf any 224.0.0.5 0.0.0.0
+
+access-list 105 permit tcp any host 10.124.179.2 eq 80 
+access-list 105 permit tcp any host 10.124.179.2 eq 443 
+access-list 105 permit tcp any host 10.124.179.2 eq 53 
+access-list 105 permit udp any host 10.124.179.2 eq 53 
+
+access-list 105 deny ip any 10.124.179.2 0.0.0.0 
+access-list 100 deny ip any 10.124.179.2 0.0.0.0 
+access-list 101 deny ip any 10.124.179.2 0.0.0.0 
+access-list 102 deny ip any 10.124.179.2 0.0.0.0 
+access-list 103 deny ip any 10.124.179.2 0.0.0.0 
+access-list 106 deny ip any 10.124.179.2 0.0.0.0 
+
+5th
+
+#access-list 100 permit ip any any
+access-list 101 permit ip any any
+access-list 102 permit ip any any
+access-list 103 permit ip any any
+access-list 105 permit ip any any
+access-list 106 permit ip any any
+
+int f1/0.251
+ip access-group 105 in 
+int f1/0.241 
+ip access-group 100 in 
+int f1/0.242
+ip access-group 101 in 
+int f1/0.243
+ip access-group 102 in
+int f1/0.245
+ip access-group 102 in
+int f1/0.244
+ip access-group 106 in
+
+
+
+
+
+
+
+ 
+

@@ -1,0 +1,120 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname RouterInternet
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX1017VF05-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 120.57.101.190 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface FastEthernet1/0
+ no ip address
+!
+interface FastEthernet1/0.236
+ encapsulation dot1Q 236
+ ip address 10.124.180.1 255.255.255.192
+!
+interface FastEthernet1/0.237
+ encapsulation dot1Q 237
+ ip address 10.124.180.65 255.255.255.192
+!
+interface FastEthernet1/0.238
+ encapsulation dot1Q 238
+ ip address 10.124.180.129 255.255.255.224
+!
+interface FastEthernet1/0.239
+ encapsulation dot1Q 239
+ ip address 10.124.180.193 255.255.255.224
+!
+interface FastEthernet1/0.240
+ encapsulation dot1Q 240
+ ip address 10.124.179.129 255.255.255.128
+!
+interface FastEthernet1/0.251
+ encapsulation dot1Q 251
+ ip address 10.124.179.1 255.255.255.128
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router rip
+!
+ip classless
+ip route 10.124.179.0 255.255.255.0 120.57.101.191 
+ip route 10.124.179.0 255.255.255.192 120.57.101.191 
+ip route 10.124.179.0 255.255.255.128 10.124.179.2 
+ip route 10.124.179.128 255.255.255.128 10.124.179.2 
+ip route 10.124.180.0 255.255.255.192 10.124.179.2 
+ip route 10.124.180.64 255.255.255.192 10.124.179.2 
+ip route 10.124.180.128 255.255.255.224 10.124.179.2 
+ip route 10.124.180.192 255.255.255.224 10.124.179.2 
+ip route 10.124.179.0 255.255.255.128 10.124.179.3 
+ip route 10.124.179.128 255.255.255.128 10.124.179.3 
+ip route 10.124.180.0 255.255.255.192 10.124.179.3 
+ip route 10.124.180.64 255.255.255.192 10.124.179.3 
+ip route 10.124.180.128 255.255.255.224 10.124.179.3 
+ip route 10.124.180.192 255.255.255.224 10.124.179.3 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

@@ -1,0 +1,28 @@
+VLAN Trucking Protocol (VTP)
+
+---------------------------
+Server mode (B3-IC-F0)
+>enable -> privileged EXEC mode (#)
+#congigure
+#terminal -> configuration mode
+(config)#vtp domain rcompdhg5
+(config)#end ->vai de volta para privileged EXEC mode (#)
+#show vtp status
+---------------------------
+Client mode (B3-HC1-F0)
+>enable -> privileged EXEC mode (#)
+#congigure
+#terminal -> configuration mode
+(config)#vtp mode client
+(config)#end ->vai de volta para privileged EXEC mode (#)
+#show vtp status
+---------------------------
+---------------------------
+voice vlan (B3-Phone-F0)
+>enable -> privileged EXEC mode (#)
+#congigure
+#terminal -> configuration mode
+(config)# interface FastEthernet 0/1
+(config-if)#switchport voice vlan 500
+(config-if)#exit
+---------------------------
